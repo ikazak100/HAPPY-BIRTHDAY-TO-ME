@@ -21,6 +21,7 @@ body {
   position: absolute;
   top: 50%;  /* 居中 */
   left: 50%; /* 居中 */
+  width: 60%;
   transform: translate(-50%, -50%); /* 精确居中，确保GIF完全在中间 */
   z-index: 1;  /* 如果有其他元素，确保 GIF 在最上层 */
 }
