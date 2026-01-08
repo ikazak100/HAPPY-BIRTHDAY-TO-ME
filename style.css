@@ -1,0 +1,346 @@
+body {
+  margin: 0;
+  background-image: url('bg.png'); /* 使用你的背景图 */
+  background-size: cover;  /* 拉伸背景图，使其覆盖整个页面 */
+  background-position: center center;  /* 保证背景图居中显示 */
+}
+
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.full-image {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.animated-gif {
+  position: absolute;
+  top: 50%;  /* 居中 */
+  left: 50%; /* 居中 */
+  width: 60%;
+  transform: translate(-50%, -50%); /* 精确居中，确保GIF完全在中间 */
+  z-index: 1;  /* 如果有其他元素，确保 GIF 在最上层 */
+}
+
+.hero {
+  position: relative;
+  height: 50vh;  /* 改为占页面的一半 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cursor-dot, .mini-dot {
+  position: absolute;
+  z-index: 9999;  /* 确保贴纸和光标红点显示在最上层 */
+}
+/* 下半部分 */
+.bottom {
+  position: relative;
+  height: 50vh;  /* 下半部分占据剩余的页面高度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -900px;  /* 通过微调 margin-top 来减少间距 */
+}
+
+.bottom-image {
+  width: 80%;  /* 使素材图适应页面宽度 */
+  max-width: 1200px;  /* 控制最大宽度 */
+  height: auto;
+}
+
+.collage {
+  position: absolute;  /* 定位在视频区域内 */
+  top: 0;  /* 可根据需求调整位置 */
+  left: 0; /* 可根据需求调整位置 */
+  width: 100%; /* 保证宽度适配 */
+  height: 100%; /* 保证高度适配 */
+  pointer-events: none; /* 防止拼贴元素影响其他交互 */
+}
+
+.collage-item {
+  position: absolute;
+  top: 68%; /* 根据美术图调整拼贴元素的位置 */
+  left: 17%; /* 根据美术图调整拼贴元素的位置 */
+  width: 195px; /* 根据实际需求调整大小 */
+  height: auto; /* 使拼贴元素保持比例 */
+  z-index: 2; /* 确保拼贴元素在视频之上 */
+}
+
+.collage-item:nth-child(2) {
+  top: 6%; /* 可以给不同的拼贴元素不同的定位 */
+  left: 63%;
+  width:350px;
+}
+
+/* 贴纸按钮容器 */
+.sticker-btn-container {
+  position: absolute;
+  left: 20%;  /* 将按钮放置在左侧 */
+  top: 155%;  /* 将按钮垂直居中 */
+  transform: translateY(-50%);  /* 精确居中 */
+  z-index: 2;  /* 确保按钮在素材图之上 */
+}
+
+/* 贴纸按钮样式 */
+.sticker-btn {
+  width: 180px;  /* 根据需求调整按钮大小 */
+  height: auto;
+  cursor: pointer;  /* 显示为可点击按钮 */
+}
+
+/* 浮在页面上的“贴贴模式”按钮 */
+.sticker-toggle {
+  position: fixed;
+  bottom: 40px;   /* 按钮在屏幕底部距离 40px */
+  left: 40px;     /* 按钮在屏幕左侧距离 40px */
+  z-index: 10000; /* 永远在所有画面最上层 */
+  padding: 10px 16px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* 跟随鼠标的小红点（贴纸预览） */
+/* 新的光标样式：光标跟随的小红点 */
+#cursorDot {
+  position: fixed;
+  width: 32px;    /* 设定素材图的尺寸 */
+  height: 32px;
+  background-image: url('sticke1.png');  /* 使用你自己的素材 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  pointer-events: none; /* 确保不干扰点击 */
+  display: none;        /* 默认不显示，只有在进入贴纸模式时才显示 */
+  z-index: 10000;       /* 保证在最上层 */
+  transform: translate(-50%, -50%); /* 以素材中心对准光标 */
+}
+
+
+
+/* 确保贴纸层覆盖整个页面，并且在最上层 */
+#stickerLayer {
+  position: absolute; /* 使用 absolute 确保与页面内容绑定 */
+  top: 0;
+  left: 0;
+  width: 100%;   /* 填满整个页面 */
+  height: 100%;  /* 填满整个页面 */
+  pointer-events: none;  /* 防止干扰页面交互 */
+  z-index: 9999;  /* 确保贴纸层在所有其他元素之上 */
+}
+
+/* 贴纸样式，确保图片在预期位置并显示 */
+.mini-dot {
+  position: absolute;
+  width: 32px;   /* 根据实际素材大小调整 */
+  height: 32px;
+  background-image: url('sticker-dot.png');  /* 替换为你想要的素材图 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: translate(-50%, -50%); /* 居中对齐 */
+  z-index: 99999;  /* 确保贴纸显示在最上层 */
+}
+
+
+/* 跟随鼠标的小红点（贴纸预览） */
+#cursorDot {
+  position: fixed;
+  width: 32px;              /* 改成图片的大小，比如 32x32，把原来 10px 改一下 */
+  height: 32px;
+  /* background: red;        ❌ 先注释掉或删除 */
+  /* border-radius: 50%;     ❌ 不再需要圆形 */
+
+  background-image: url('sticker-preview.png');  /* ✅ 贴纸预览素材 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  pointer-events: none;
+  display: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);  /* ✅ 让图片中心对准光标 */
+}
+
+
+/* 贴纸所在的图层，铺满整个屏幕 */
+#stickerLayer {
+  position: absolute;   /* ✅ 改这里：fixed -> absolute */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;         /* 跟着页面内容走 */
+  #stickerLayer {
+  pointer-events: auto;
+}
+  z-index: 9999;
+}
+
+/* 真正贴上去的红点 */
+.mini-dot {
+  position: absolute;
+  width: 32px;                 /* 和预览差不多大小 */
+  height: 32px;
+  /* background: red;          ❌ 删掉颜色 */
+  /* border-radius: 50%;       ❌ 不再需要 */
+
+  background-image: url('sticker-dot.png');  /* ✅ 贴上的贴纸素材 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  transform: translate(-50%, -50%);  /* ✅ 以中心对准之前记录的点 */
+}
+
+#secretClear {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  width: 40px;
+  height: 40px;
+  opacity: 0;        /* 完全不可见 */
+  z-index: 999999;
+  pointer-events: auto;
+}
+
+/* 调试时可启用这行看看位置（用完删） */
+/* #secretClear { background: rgba(255,0,0,.2); } */
+
+.eraser-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 10px;
+  background: #ff6666;
+  color: #fff;
+  border: none;
+  z-index: 99999;
+  cursor: pointer;
+}
+
+/* 开启橡皮擦模式时的状态（可选，但推荐） */
+.eraser-btn.on {
+  background: #ff2d2d;
+}
+
+/* 很重要：贴纸是可以被点到的 */
+.mini-dot {
+  pointer-events: auto;
+}
+
+/* 解谜组件容器 —— 悬浮在画面上 */
+.riddle-box {
+  position: absolute;      /* ❗ 关键：叠在素材之上 */
+  right: 22%;              /* 调整它的大致位置 */
+  top: 52%;                /* 你可以微调数值 */
+  transform: translateY(-50%);
+  text-align: center;
+  z-index: 9999;           /* 盖住底图但不挡贴纸 */
+  pointer-events: auto;
+}
+
+/* 红色提示文字 —— 默认隐藏，显示在图片上方 */
+.riddle-text {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #ff2d2d;
+  font-weight: 600;
+  display: none;          /* 默认隐藏 */
+  text-align: center;     /* 文字居中 */
+  line-height: 1.4;       /* 行距稍微柔和 */
+}
+
+/* 点击图像 */
+.riddle-img {
+  width: 120px;
+  height: auto;
+  cursor: pointer;
+}
+
+/* 播放中状态 */
+.music-btn.playing {
+  background: #ff4d4d;
+}
+
+
+.footer-text {
+  position: fixed;          /* ✅ 固定在视口底部 */
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+
+  z-index: 100000;          /* 在最上层 */
+  pointer-events: none;     /* 不影响任何交互 */
+}
+
+.footer-text p {
+  margin: 4px 0;
+  font-size: 12px;
+  color: #ffffff;
+  opacity: 0.85;
+}
+/* .footer-text { ... } */
+/* .footer-text p { ... } */
+
+/* 允许按钮本身被点击 */
+#fixed-ui button {
+  pointer-events: auto;
+}
+
+#forceFooter {
+  position: fixed;            /* 固定在视口 */
+  bottom: 16px;               /* 使其靠近底部 */
+  left: 50%;                  /* 居中 */
+  transform: translateX(-50%); /* 精确居中对齐 */
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  user-select: none;          /* 防止文字被选中 */
+}
+
+#forceFooter > div {
+  margin: 4px 0;
+  opacity: 0.85;
+}
+
+/* 音乐按钮容器 */
+.music-container {
+  position: absolute;        /* 固定在背景上，不跟随滚动 */
+  top: 20%;                  /* 设置按钮的位置，略高于 GIF 图 */
+  left: 50%;
+  transform: translateX(-50%);  /* 保证按钮居中对齐 */
+}
+
+/* 按钮样式 */
+.music-btn {
+  position: absolute;        /* 固定在背景上，不跟随滚动 */
+  top: 20px;                 /* 距离背景顶部的距离 */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100000;
+  background: transparent;   /* 按钮背景透明 */
+  border: none;               /* 去除默认的按钮边框 */
+  padding: 0;                 /* 去除默认内边距 */
+  cursor: pointer;           /* 鼠标悬停时显示为手型 */
+}
+
+.music-btn img {
+  width:165px;               /* 调整按钮大小为适当的 GIF 尺寸 */
+  height: auto;              /* 高度自适应，保持比例 */
+}
+
+
+
