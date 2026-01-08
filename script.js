@@ -132,19 +132,19 @@ const musicImg = musicBtn.querySelector('img');  // 获取按钮内的图片元�
 
 let isPlaying = false;  // 控制音乐状态
 
-// 音乐按钮和音频逻辑
-document.getElementById("musicBtn").addEventListener("click", function() {
-    var musicIcon = document.getElementById("musicIcon");
-    var audio = document.getElementById("bgm");
-
-    if (audio.paused) {
-        audio.play();  // 播放音频
-        musicIcon.src = "/assets/Music.gif"; // 更改为播放中的GIF
-        this.classList.add("playing"); // 可选: 添加CSS样式来改变按钮样式
-    } else {
-        audio.pause(); // 暂停音频
-        musicIcon.src = "assets/music.png"; // 恢复为原始GIF
-        this.classList.remove("playing"); // 移除播放状态样式
-    }
+// 播放/暂停音乐按钮点击事件
+musicBtn.addEventListener('click', function () {
+  if (!isPlaying) {
+    // 播放音乐
+    bgm.play();
+    isPlaying = true;
+    musicImg.src = 'assets/Music.gif';  // 切换为播放状态的GIF
+  } else {
+    // 暂停音乐
+    bgm.pause();
+    isPlaying = false;
+    musicImg.src = '/assets/music.png';  // 切换为暂停状态的PNG
+  }
 });
+
 
