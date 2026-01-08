@@ -143,8 +143,9 @@ musicBtn.addEventListener('click', function () {
     // 暂停音乐
     bgm.pause();
     isPlaying = false;
-    musicImg.src = '/assets/music.png';  // 切换为暂停状态的PNG
+    musicImg.src = 'assets/music.png';  // 切换为暂停状态的PNG
   }
 });
+
 
 
